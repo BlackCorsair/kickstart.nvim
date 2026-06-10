@@ -3,11 +3,26 @@
 --
 -- See the kickstart.nvim README for more information
 
--- Iterate over all Lua files in the plugins directory and load them
+-- Iterate over all Lua files in the plugins directory and load them.
 local plugins_dir = vim.fs.joinpath(vim.fn.stdpath 'config', 'lua', 'custom', 'plugins')
-for file_name, type in vim.fs.dir(plugins_dir) do
-  if type == 'file' and file_name:match '%.lua$' and file_name ~= 'init.lua' then
-    local module = file_name:gsub('%.lua$', '')
-    require('custom.plugins.' .. module)
+
+---@param dir string
+---@param prefix string
+---@param modules string[]
+local function collect_modules(dir, prefix, modules)
+  for entry, type in vim.fs.dir(dir) do
+    if type == 'directory' then
+      collect_modules(vim.fs.joinpath(dir, entry), prefix .. entry .. '.', modules)
+    elseif type == 'file' and entry:match '%.lua$' and entry ~= 'init.lua' then
+      modules[#modules + 1] = prefix .. entry:gsub('%.lua$', '')
+    end
   end
+end
+
+local modules = {}
+collect_modules(plugins_dir, '', modules)
+table.sort(modules)
+
+for _, module in ipairs(modules) do
+  require('custom.plugins.' .. module)
 end
