@@ -1,15 +1,13 @@
-return {
-  {
-    'stevearc/oil.nvim',
-    opts = {},
-    -- Optional dependencies
-    dependencies = { { 'echasnovski/mini.icons', opts = {} } },
-    -- dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if you prefer nvim-web-devicons
-    -- Lazy loading is not recommended because it is very tricky to make it work correctly in all situations.
-    lazy = false,
-    view_options = {
-      show_hidden = true,
-    },
-    vim.keymap.set('n', '<leader>o', '<cmd>Oil<CR>', { desc = '[S]earch Recent Files ("." for repeat)' }),
+vim.pack.add {
+  'https://github.com/echasnovski/mini.icons',
+  'https://github.com/stevearc/oil.nvim',
+}
+
+require('mini.icons').setup {}
+require('oil').setup {
+  view_options = {
+    show_hidden = true,
   },
 }
+
+vim.keymap.set('n', '<leader>o', '<cmd>Oil<CR>', { desc = '[O]pen Oil' })
