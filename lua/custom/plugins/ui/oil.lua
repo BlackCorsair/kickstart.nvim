@@ -5,6 +5,10 @@ vim.pack.add {
 
 require('mini.icons').setup {}
 require('oil').setup {
+  keymaps = {
+    ['<C-h>'] = false,
+    ['<C-l>'] = false,
+  },
   view_options = {
     show_hidden = true,
   },
