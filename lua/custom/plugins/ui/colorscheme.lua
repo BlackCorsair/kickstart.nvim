@@ -1,4 +1,5 @@
-vim.pack.add { 'https://github.com/tanvirtin/monokai.nvim' }
+vim.pack.add { 'git@github.com:BlackCorsair/nvim-wasp-theme.git' }
 
-vim.cmd.colorscheme 'monokai'
+vim.o.background = 'dark' -- Set to 'light' for the cream/amber variant.
+vim.cmd.colorscheme 'wasp'
 vim.cmd.hi 'Comment gui=none'
